@@ -1,40 +1,54 @@
+class Plateau(object):
+    def __init__(self, width, hight):
+        self.maxX = width
+        self.maxY = hight
+
 
 class Rover(object):
 
-    def __init__(self,x,y,d):
-        self.x = x
-        self.y = y
-        self.dire = d
+    def __init__(self,x,y,d,plateau):
+        self.x_coordinates = x
+        self.y_coordinates = y
+        self.direction = d
+        self.plateau = plateau
 
-    def turn(self,d):
-        if d=='R':
-            if self.dire == 'N':
-                self.dire = 'E'
-            elif self.dire == 'E':
-                self.dire = 'S'
-            elif self.dire == 'S':
-                self.dire = 'W'
-            elif self.dire == 'W':
-                self.dire = 'N'
+    def setCoordinatesX(self,value):
+        self.x_coordinates = value
 
-        if d=='L':
-            if self.dire == 'N':
-                self.dire = 'W'
-            elif self.dire == 'W':
-                self.dire = 'S'
-            elif self.dire == 'S':
-                self.dire = 'E'
-            elif self.dire == 'E':
-                self.dire = 'N'
+    def setCoordinatesY(self,value):
+        self.y_coordinates = value
+
+    def setDirection(self,value):
+        self.direction = value
+
+
+    def turnRight(self):
+        self.direction = {
+            'N' : 'E',
+            'E' : 'S',
+            'S' : 'W',
+            'W' : 'N',
+        }[self.direction]
+
+    def turnLeft(self):
+        self.direction = {
+            'N' : 'W',
+            'W' : 'S',
+            'S' : 'E',
+            'E' : 'N',
+        }[self.direction]
+
+
+
     def move(self):
-        if self.dire == 'N':
-            self.y += 1
-        elif self.dire == 'E':
-            self.x += 1
-        elif self.dire == 'S':
-            self.y -= 1
-        elif self.dire == 'W':
-            self.x -= 1
+        if self.direction == 'N' and self.plateau.maxY > self.y_coordinates:
+            self.y_coordinates += 1
+        elif self.direction == 'E' and self.plateau.maxX > self.y_coordinates:
+            self.x_coordinates += 1
+        elif self.direction == 'S'  and self.plateau.maxY > self.y_coordinates:
+            self.y_coordinates -= 1
+        elif self.direction == 'W' and self.plateau.maxX > self.y_coordinates:
+            self.x_coordinates -= 1
 
     def position(self):
-        return str(self.x) + " " + str(self.y) + " " + self.dire
+        return str(self.x_coordinates) + " " + str(self.y_coordinates) + " " + self.direction
